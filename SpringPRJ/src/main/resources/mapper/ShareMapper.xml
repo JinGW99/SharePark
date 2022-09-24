@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kopo.poly.persistance.mapper.IShareMapper">
+
+
+    <!--    주차장 등록하기 -->
+    <insert id="InsertShare" parameterType="ShareDTO">
+
+        INSERT INTO SHAREPARK (
+        SP_TITLE, SP_CONTENTS,
+        USER_ID, REG_ID, REG_DT,
+        START_TIME, END_TIME, SP_PLACE,
+        CHG_ID, CHG_DT
+        )
+        VALUE (
+        #{sp_title}, #{sp_contents},
+        #{user_id}, #{user_id}, sysdate(),
+        #{start_time}, #{end_time}, #{sp_place},
+        #{user_id}, sysdate()
+        )
+    </insert>
+
+<!--    공유한 주차장 가져오기 -->
+    <select id="getShareList" resultType="ShareDTO">
+        SELECT S.SP_SEQ, S.SP_TITLE, S.SP_CONTENTS, S.START_TIME, S.END_TIME, S.SP_PLACE, P.SAVE_FILE_PATH
+        FROM SHAREPARK S
+        JOIN FILE_PATH P
+        ON S.SP_SEQ = P.FILE_SEQ
+        WHERE S.REG_ID = #{user_id}
+    </select>
+
+
+    <!--    주차장 전체 가져오기 -->
+    <select id="getShareListAll" resultType="ShareDTO">
+        SELECT SP_SEQ, SP_TITLE, USER_ID, REG_ID, REG_DT, START_TIME, END_TIME, SP_PLACE, CHG_ID, CHG_DT
+        FROM SHAREPARK
+    </select>
+
+
+    <!--    주차장 상세보기 -->
+    <select id="getParkInfo" resultType="ShareDTO">
+        SELECT S.SP_SEQ, S.SP_TITLE, S.SP_CONTENTS, S.SP_PLACE, S.START_TIME, S.END_TIME, S.REG_ID, S.RESER_ID, P.SAVE_FILE_PATH
+        FROM SHAREPARK S
+        JOIN FILE_PATH P
+        ON S.SP_SEQ = P.FILE_SEQ
+        WHERE SP_SEQ = #{sp_seq}
+    </select>
+
+    <!--    주차장 정보 수정 -->
+    <update id="updateParkInfo" parameterType="ShareDTO">
+        UPDATE SHAREPARK  SET
+            SP_TITLE = #{sp_title},
+            SP_CONTENTS = #{sp_contents},
+            START_TIME = #{start_time},
+            END_TIME = #{end_time},
+            SP_PLACE = #{sp_place},
+            CHG_ID = #{user_id},
+            CHG_DT = SYSDATE()
+        WHERE
+            SP_SEQ = #{sp_seq}
+    </update>
+
+    <!--    주차장 삭제 -->
+    <delete id="deleteParkInfo" parameterType="ShareDTO">
+        DELETE FROM SHAREPARK
+        WHERE SP_SEQ = #{sp_seq}
+    </delete>
+
+    <!--    예약자 있는지 확인 -->
+    <select id="getReserExists" parameterType="ShareDTO" resultType="ShareDTO">
+        SELECT RESER_ID
+        FROM SHAREPARK
+        WHERE SP_SEQ = #{sp_seq}
+    </select>
+
+
+
+    <update id="Reservation" parameterType="ShareDTO">
+        UPDATE SHAREPARK SET
+            RESER_ID = #{reser_id}
+        WHERE
+            SP_SEQ = #{sp_seq}
+    </update>
+
+    <!--<insert id="Reservation" parameterType="ShareDTO">
+        INSERT INTO SHAREPARK(
+            RESER_ID
+        )VALUE (
+            #{user_id}
+        )
+    WHERE SP_SEQ = #{sp_seq}
+    </insert>-->
+
+    <select id="reserPark" parameterType="ShareDTO" resultType="ShareDTO">
+        SELECT S.SP_SEQ, S.SP_TITLE, S.SP_CONTENTS, S.START_TIME, S.END_TIME, S.SP_PLACE, P.SAVE_FILE_PATH
+        FROM SHAREPARK S
+        JOIN FILE_PATH P
+        ON S.SP_SEQ = P.FILE_SEQ
+        WHERE S.RESER_ID = #{user_id}
+    </select>
+
+    <delete id="deleteReser" parameterType="ShareDTO">
+        UPDATE SHAREPARK SET
+            RESER_ID = NULL
+        WHERE SP_SEQ = #{sp_seq}
+    </delete>
+
+    <insert id="InsertTitle" parameterType="ImgDTO">
+        INSERT INTO FILE_PATH(
+            SP_TITLE
+        )VALUE (
+            #{sp_title}
+        )
+    </insert>
+
+</mapper>

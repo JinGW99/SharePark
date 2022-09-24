@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kopo.poly.persistance.IImgMapper">
+<insert id="insertFilePath" parameterType="ImgDTO">
+    INSERT INTO FILE_PATH(
+        SAVE_FILE_PATH, SAVE_FILE_NAME, ORG_FILE_NAME,
+        EXT, REG_DT, USER_ID
+    )
+    VALUE (
+        #{save_file_path}, #{save_file_name},#{org_file_name},
+        #{ext}, #{reg_dt}, #{user_id}
+    )
+
+</insert>
+
+
+
+</mapper>
+
