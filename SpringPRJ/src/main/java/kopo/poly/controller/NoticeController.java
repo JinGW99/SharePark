@@ -142,5 +142,42 @@ public class NoticeController {
     }
 
 
+    @GetMapping(value = "notice/NoticeDelete")
+    public String NoticeDelete(HttpServletRequest request, ModelMap model) {
+
+        log.info(this.getClass().getName() + ".NoticeDelete Start!");
+
+        String msg = "";
+
+        try{
+
+            String nSeq = CmmUtil.nvl(request.getParameter("nSeq"));
+
+            log.info("nSeq : " + nSeq);
+
+            NoticeDTO pDTO = new NoticeDTO();
+
+            pDTO.setNotice_seq(nSeq);
+
+            noticeService.deleteNoticeInfo(pDTO);
+
+            msg = "삭제되었습니다";
+
+        }catch (Exception e){
+            msg = "실패하였습니다 : " + e.getMessage();
+
+            log.info(e.toString());
+            e.printStackTrace();
+
+        }finally {
+            log.info(this.getClass().getName() + ".NoticeDelete End!");
+
+            model.addAttribute("msg", msg);
+
+        }
+        return "notice/MsgToList";
+    }
+
+
 
 }
