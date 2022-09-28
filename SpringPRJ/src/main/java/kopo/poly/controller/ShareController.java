@@ -82,7 +82,7 @@ public class ShareController extends AbstractImgUpload {
         return "/PRJ/myPage3";
     }
 
-
+//공유주차장 보기
     @GetMapping(value = "spMap_test")
     public String test(HttpSession session, HttpServletRequest request, ModelMap model) throws Exception{
 
@@ -107,6 +107,7 @@ public class ShareController extends AbstractImgUpload {
 
     }
 
+    //주차장 상세보기
     @GetMapping(value = "share/ParkInfo")
     public String ParkInfo(HttpServletRequest request, ModelMap model, HttpSession session){
 
@@ -171,6 +172,7 @@ public class ShareController extends AbstractImgUpload {
             if (rDTO == null){
                 rDTO = new ShareDTO();
             }
+
             log.info("### rDTO : {}", rDTO);
             log.info("### rDTO.path : {}", rDTO.getSave_file_path());
             log.info("### rDTO.seq : {}", rDTO.getSp_seq());
@@ -181,6 +183,7 @@ public class ShareController extends AbstractImgUpload {
 
             model.addAttribute("msg", msg);
             model.addAttribute("rDTO", rDTO);
+
             return "/Share/ParkEditInfo";
 
         }catch (Exception e){
@@ -237,10 +240,10 @@ public class ShareController extends AbstractImgUpload {
             shareService.updateParkInfo(pDTO);
 
             msg = "수정되었습니다";
-            url = "/PRJmain";
+            url = "/PRJ/PRJmain";
         }catch (Exception e){
             msg = "fail :" + e.getMessage();
-            url = "PRJmain";
+            url = "/PRJ/PRJmain";
             log.info(e.toString());
             e.printStackTrace();;
         }finally {
@@ -253,6 +256,7 @@ public class ShareController extends AbstractImgUpload {
         return "/redirect";
     }
 
+    //공유주차장 삭제
     @GetMapping(value = "share/ParkDelete")
     public String ParkDelete(HttpServletRequest request, ModelMap model){
 

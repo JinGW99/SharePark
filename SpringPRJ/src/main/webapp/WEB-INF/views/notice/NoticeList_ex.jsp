@@ -12,7 +12,7 @@
 <%@ page import="kopo.poly.dto.NoticeDTO" %>
 <%@ page import="kopo.poly.util.CmmUtil" %>
 <%
-    session.setAttribute("SESSION_USER_ID", "USER01"); //세션 강제 적용, 로그인된 상태로 보여주기 위함
+    String SS_USER_ID = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
     List<NoticeDTO> rList = (List<NoticeDTO>) request.getAttribute("rList");
 //게시판 조회 결과 보여주기
     if (rList == null) {

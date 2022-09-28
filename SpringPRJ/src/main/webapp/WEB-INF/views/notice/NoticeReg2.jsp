@@ -1,30 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ page import="kopo.poly.util.CmmUtil" %>
-<%@ page import="kopo.poly.dto.NoticeDTO" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%
-    NoticeDTO rDTO = (NoticeDTO)request.getAttribute("rDTO");
-//공지글 정보를 못불러왔다면, 객체 생성
-    if (rDTO==null){
-        rDTO = new NoticeDTO();
-    }
-
     String SS_USER_ID = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
-
-    int access = 1; //(작성자 : 2 / 다른 사용자: 1)
-    if (CmmUtil.nvl((String)session.getAttribute("SS_USER_ID")).equals(
-            CmmUtil.nvl(rDTO.getUser_id()))){
-        access = 2;
-    }
-
-    System.out.println("rDTO" + rDTO);
-    System.out.println("user_id : " + CmmUtil.nvl(rDTO.getUser_id()));
-    System.out.println("SS_USER_ID : " + SS_USER_ID);
 %>
 <html>
 <head>
-    <title>게시판 글보기</title>
+    <title>게시판 글쓰기</title>
 
     <style type="text/css">
         body{
@@ -258,27 +241,8 @@
             width:120px;
         }
     </style>
+
     <script type="text/javascript">
-        //작성자 여부체크
-        function doEdit(){
-
-            if ("<%=access%>"=="1"){
-                alert("작성자만 수정할 수 있습니다.");
-            }else {
-                location.href="/notice/NoticeEditInfo?notice_seq=<%=CmmUtil.nvl(rDTO.getNotice_seq())%>"
-            }
-        }
-
-        function doDelete(){
-            if ("<%=access%>" == 2){
-                if (confirm("작성한 글을 삭제하시겠습니까?")){
-                    location.href="notice/NoticeDelete?notice_seq=<%=CmmUtil.nvl(rDTO.getNotice_seq())%>";
-
-                }
-            }else {
-                alert("본인이 작성한 게시글만 삭제할 수 있습니다.");
-            }
-        }
         //전송시 유효성 체크
         function doSubmit(f){
             if(f.title.value == ""){
@@ -340,8 +304,6 @@
             return tcount;
         }
     </script>
-
-
 </head>
 <body class="pc" onload="doOnload();" >
 <form name="f" method="post" action="/notice/NoticeInsert" target= "ifrPrc" onsubmit="return doSubmit(this);">
@@ -377,29 +339,22 @@
                                 <span>제목</span>
                             </li>
                             <li>
-                                <input type="text" name="title" maxlength="100" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" style="width: 450px" />
+                                <input type="text" name="title" maxlength="100" style="width: 450px" />
                             </li>
                             <li>
 
                             </li>
                             <li>
                                 <span>공지글 여부</span>
-                                예<input type="radio" name="noticeYn" value="Y"
-                                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "Y") %>/>
-                                아니오<input type="radio" name="noticeYn" value="N"
-                                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "N") %>/>
+                                예<input type="radio" name="noticeYn" value="Y" />
+                                아니오<input type="radio" name="noticeYn" value="N" />
                             </li>
                         </ul>
                         <div>
-                           <textarea
-                                   name="contents" style="width: 550px; height: 400px"
-                           ><%=CmmUtil.nvl(rDTO.getContents()) %></textarea>
+                            <textarea name="contents" placeholder="내용를 작성해주세요."></textarea>
                         </div>
                     </div>
-                    <a href="javascript:doEdit();">[수정]</a>
-                    <a href="javascript:doDelete()">[삭제]</a>
-
-
+                    <input type="submit" value="등록" />
                 </div>
             </div>
         </div>

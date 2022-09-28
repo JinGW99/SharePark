@@ -39,7 +39,7 @@
                     <a href="/PRJ/myPage3">공유 내역</a>
                 </li>
                 <li>
-                    <a href="/PRJmain">Home</a>
+                    <a href="/PRJ/PRJmain">Home</a>
                 </li>
             </ul>
         </nav>

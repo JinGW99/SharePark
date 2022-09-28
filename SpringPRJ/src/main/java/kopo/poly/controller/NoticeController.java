@@ -41,25 +41,28 @@ public class NoticeController {
         return "/notice/NoticeList";
     }
 
+    //게시글 등록 페이지로 이동
     @GetMapping(value = "notice/NoticeReg")
-    public String NoticeReg(){
+    public String NoticeReg(HttpSession session, HttpServletRequest request, ModelMap model){
 
         log.info(this.getClass().getName() + ".NoticeReg Start!");
 
         log.info(this.getClass().getName() + ".NoticeReg End!");
 
-        return "/notice/NoticeReg";
+        return "/notice/NoticeReg2";
     }
 
+    //게시글 등록 로직
     @PostMapping(value = "notice/NoticeInsert")
     public String NoticeInsert(HttpSession session, HttpServletRequest request, ModelMap model) {
 
         log.info(this.getClass().getName() + ".NoticeInsert start!");
 
         String msg = "";
+        String url = "";
 
         try {
-            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));
+            String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
             String title = CmmUtil.nvl(request.getParameter("title"));
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn"));
             String contents = CmmUtil.nvl(request.getParameter("contents"));
@@ -79,10 +82,12 @@ public class NoticeController {
             noticeService.InsertNoticeInfo(pDTO);
 
             msg = "등록되었습니다";
+            url = "notice/NoticeList";
 
         } catch (Exception e) {
 
             msg = "실패하였습니다 : " + e.getMessage();
+            url = "notice/NoticeList";
 
             log.info(e.toString());
             e.printStackTrace();
@@ -90,12 +95,55 @@ public class NoticeController {
         } finally {
             log.info(this.getClass().getName() + ".NoticeInsert End!");
 
+            model.addAttribute("url", url);
+            model.addAttribute("msg", msg);
+
+            log.info("model : " + model);
+        }
+
+        return "/notice/MsgToList";
+    }
+
+    //게시글 상세보기
+    @GetMapping(value = "notice/NoticeInfo")
+    public String NoticeInfo(HttpSession session, HttpServletRequest request, ModelMap model) {
+
+        log.info(this.getClass().getName() + ".NoticeInfo Start!");
+
+        String msg = "";
+
+        try {
+            String notice_seq = CmmUtil.nvl(request.getParameter("notice_seq"));
+
+            log.info("notice_seq : " + notice_seq);
+
+            NoticeDTO pDTO = new NoticeDTO();
+            pDTO.setNotice_seq(notice_seq);
+
+            NoticeDTO rDTO = noticeService.getNoticeInfo(pDTO);
+
+            if (rDTO == null){
+                rDTO = new NoticeDTO();
+            }
+            log.info("getNotice success");
+
+            model.addAttribute("rDTO", rDTO);
+
+        }catch (Exception e) {
+            msg = "실패하였습니다. : " +  e.getMessage();
+            log.info(e.toString());
+            e.printStackTrace();
+
+        }finally {
+            log.info(this.getClass().getName() + ".NoticeInfo End!");
+
             model.addAttribute("msg", msg);
         }
 
-        return "notice/MsgToList";
+        return "notice/NoticeInfo";
     }
 
+    //게시글 수정
     @PostMapping(value = "notice/NoticeUpdate")
     public String NoticeUpdate(HttpSession session, HttpServletRequest request, ModelMap model){
         log.info(this.getClass().getName() + ".NoticeUpdate Start!");
@@ -103,14 +151,14 @@ public class NoticeController {
         String msg = "";
 
         try{
-            String user_id = CmmUtil.nvl((String) session.getAttribute("SESSION_USER_ID"));
-            String nSeq = CmmUtil.nvl(request.getParameter("nSeq"));
+            String user_id = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+            String notice_seq = CmmUtil.nvl(request.getParameter("notice_seq"));
             String title = CmmUtil.nvl(request.getParameter("title"));
             String noticeYn = CmmUtil.nvl(request.getParameter("noticeYn"));
             String contents = CmmUtil.nvl(request.getParameter("contents"));
 
             log.info("user_id : " + user_id);
-            log.info("nSeq : " + nSeq);
+            log.info("notice_seq : " + notice_seq);
             log.info("title : " + title);
             log.info("noticeYn : " + noticeYn);
             log.info("contents : " + contents);
@@ -118,7 +166,7 @@ public class NoticeController {
             NoticeDTO pDTO = new NoticeDTO();
 
             pDTO.setUser_id(user_id);
-            pDTO.setNotice_seq(nSeq);
+            pDTO.setNotice_seq(notice_seq);
             pDTO.setTitle(title);
             pDTO.setNotice_yn(noticeYn);
             pDTO.setContents(contents);
@@ -142,6 +190,7 @@ public class NoticeController {
     }
 
 
+    //게시글 삭제
     @GetMapping(value = "notice/NoticeDelete")
     public String NoticeDelete(HttpServletRequest request, ModelMap model) {
 
@@ -151,13 +200,13 @@ public class NoticeController {
 
         try{
 
-            String nSeq = CmmUtil.nvl(request.getParameter("nSeq"));
+            String notice_seq = CmmUtil.nvl(request.getParameter("notice_seq"));
 
-            log.info("nSeq : " + nSeq);
+            log.info("notice_seq : " + notice_seq);
 
             NoticeDTO pDTO = new NoticeDTO();
 
-            pDTO.setNotice_seq(nSeq);
+            pDTO.setNotice_seq(notice_seq);
 
             noticeService.deleteNoticeInfo(pDTO);
 

@@ -5,6 +5,7 @@
 
 <%
     String SS_USER_ID = CmmUtil.nvl((String) session.getAttribute("SS_USER_ID"));
+
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -95,6 +96,22 @@
                 </div>
             </div>
         </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#notice" aria-expanded="true"
+               aria-controls="notice">
+                <i class="fas fa-fw fa-table"></i>
+                <span>게시판</span>
+            </a>
+            <div id="notice" class="collapse" aria-labelledby="headingTable" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">게시판</h6>
+                    <a class="collapse-item" href="/notice/NoticeList">게시판 보기</a>
+
+
+                </div>
+            </div>
+        </li>
+
         <hr class="sidebar-divider">
 
     </ul>
@@ -103,7 +120,7 @@
         <div id="content">
             <!-- TopBar -->
             <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
-
+                <!--날씨 -->
                 <h6 class="ctemp">현재날씨 : </h6><h6 style="color: #ffffff;">℃</h6> <h6 class="icon"> 오늘의 날씨</h6>
 
                 <ul class="navbar-nav ml-auto">
