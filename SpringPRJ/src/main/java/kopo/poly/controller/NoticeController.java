@@ -49,7 +49,7 @@ public class NoticeController {
 
         log.info(this.getClass().getName() + ".NoticeReg End!");
 
-        return "/notice/NoticeReg2";
+        return "/notice/NoticeReg";
     }
 
     //게시글 등록 로직
@@ -141,6 +141,17 @@ public class NoticeController {
         }
 
         return "notice/NoticeInfo";
+    }
+
+    //게시글 수정으로 이동
+    @GetMapping(value = "notice/NoticeEditInfo")
+    public String NoticeEditInfo(HttpSession session, HttpServletRequest request, ModelMap model){
+
+        log.info(this.getClass().getName() + ".NoticeReg Start!");
+
+        log.info(this.getClass().getName() + ".NoticeReg End!");
+
+        return "/notice/NoticeEditInfo";
     }
 
     //게시글 수정
