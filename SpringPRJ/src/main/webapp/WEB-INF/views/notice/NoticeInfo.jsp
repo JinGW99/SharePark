@@ -304,7 +304,7 @@
                         <a href="/notice/NoticeList" class="active">게시판</a>
                     </li>
                     <li>
-                        <a href="/PRJ/PRJmain">HOME</a>
+                        <a href="/PRJmain">HOME</a>
                     </li>
                 </ul>
             </nav>
@@ -318,20 +318,18 @@
                     </div>
                     <!-- 공지사항  -->
                     <div class="tab_each">
-                        <ul>
-                            <li>
-                                <span>제목</span>
-                            </li>
-                            <li>
-                                <input type="text" name="title" maxlength="100" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" readonly style="width: 450px" />
-                            </li>
-                            <li>
 
-                            </li>
-                            <li>
-                                <span>내용</span>
-                            </li>
-                        </ul>
+                        <div>
+                            <span>제목</span>
+                        </div>
+                        <div>
+                            <input type="text" name="title" maxlength="100" value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" readonly style="width: 450px" />
+                        </div>
+
+                        <div>
+                            <span>내용</span>
+                        </div>
+
                         <div>
                            <textarea
                                    name="contents" style="width: 550px; height: 400px" readonly

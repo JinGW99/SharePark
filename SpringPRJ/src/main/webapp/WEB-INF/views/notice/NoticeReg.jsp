@@ -323,20 +323,18 @@
                     </div>
                     <!-- 공지사항  -->
                     <div class="tab_each">
-                        <ul>
-                            <li>
-                                <span>제목</span>
-                            </li>
-                            <li>
-                                <input type="text" name="title" maxlength="100" style="width: 450px" />
-                            </li>
-                            <li>
 
-                            </li>
-                            <li>
-                                <span>내용</span>
-                            </li>
-                        </ul>
+                        <div>
+                            <span>제목</span>
+                        </div>
+                        <div>
+                            <input type="text" name="title" maxlength="100" style="width: 450px" />
+                        </div>
+
+                        <div>
+                            <span>내용</span>
+                        </div>
+
                         <div>
                             <textarea name="contents" placeholder="내용를 작성해주세요."></textarea>
                         </div>

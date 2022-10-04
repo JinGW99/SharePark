@@ -9,7 +9,7 @@
         SELECT NOTICE_SEQ, TITLE, READ_CNT, USER_ID,
                DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
         FROM NOTICE
-        ORDER BY NOTICE_YN, REG_DT DESC
+        ORDER BY REG_DT DESC
     </select>
 
 
