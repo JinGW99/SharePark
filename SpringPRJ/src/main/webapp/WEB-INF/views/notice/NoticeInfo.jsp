@@ -329,11 +329,7 @@
 
                             </li>
                             <li>
-                                <span>공지글 여부</span>
-                                예<input type="radio" name="noticeYn" value="Y" readonly
-                                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "Y") %>/>
-                                아니오<input type="radio" name="noticeYn" value="N" readonly
-                                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "N") %>/>
+                                <span>내용</span>
                             </li>
                         </ul>
                         <div>

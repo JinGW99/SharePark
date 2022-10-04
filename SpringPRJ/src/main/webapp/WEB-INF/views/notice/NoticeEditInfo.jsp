@@ -94,24 +94,18 @@
 <body onload="doOnload();">
 <h2>글 수정!</h2>
 <form name="f" method="post" action="/notice/NoticeUpdate" onsubmit="return doSubmit(this);">
-    <input type="hidden" name="nSeq" value="<%=CmmUtil.nvl(request.getParameter("nSeq")) %>" />
+    <input type="hidden" name="notice_seq" value="<%=CmmUtil.nvl(request.getParameter("notice_seq")) %>" />
         <col width="100px" />
         <col width="500px" />
         <div>
-            <div align="center">제목</div>
+            <div align="left">제목</div>
             <div>
                 <input type="text" name="title" maxlength="100"
                        value="<%=CmmUtil.nvl(rDTO.getTitle()) %>" style="width: 450px"/>
             </div>
         </div>
         <div>
-            <div align="center">공지글 여부</div>
-            <div>
-                예<input type="radio" name="noticeYn" value="1"
-                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "Y") %>	/>
-                아니오<input type="radio" name="noticeYn" value="2"
-                    <%=CmmUtil.checked(CmmUtil.nvl(rDTO.getNotice_yn()), "N") %>	/>
-            </div>
+            <div align="left">내용</div>
         </div>
         <div>
             <div colspan="2">

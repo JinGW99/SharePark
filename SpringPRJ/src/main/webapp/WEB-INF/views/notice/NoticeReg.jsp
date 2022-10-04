@@ -257,18 +257,7 @@
                 return false;
             }
 
-            var noticeCheck = false; //체크 여부 확인 변수
-            for(var i=0;i<f.noticeYn.length;i++){
-                if (f.noticeYn[i].checked){
-                    noticeCheck = true;
-                }
-            }
 
-            if(noticeCheck==false){
-                alert("공지글 여부를 선택하시기 바랍니다.");
-                f.noticeYn[0].focus();
-                return false;
-            }
 
             if(f.contents.value == ""){
                 alert("내용을 입력하시기 바랍니다.");
@@ -345,9 +334,7 @@
 
                             </li>
                             <li>
-                                <span>공지글 여부</span>
-                                예<input type="radio" name="noticeYn" value="Y" />
-                                아니오<input type="radio" name="noticeYn" value="N" />
+                                <span>내용</span>
                             </li>
                         </ul>
                         <div>

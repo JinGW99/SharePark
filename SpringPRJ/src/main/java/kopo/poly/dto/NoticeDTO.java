@@ -9,7 +9,6 @@ public class NoticeDTO {
 
     private String notice_seq;
     private String title;
-    private String notice_yn;
     private String contents;
     private String user_id;
     private String read_cnt;

@@ -6,7 +6,7 @@
 
     <!-- 게시판 리스트 쿼리 -->
     <select id="getNoticeList" resultType="NoticeDTO">
-        SELECT NOTICE_SEQ, TITLE, NOTICE_YN, READ_CNT, USER_ID,
+        SELECT NOTICE_SEQ, TITLE, READ_CNT, USER_ID,
                DATE_FORMAT(REG_DT, '%Y-%m-%d') AS REG_DT
         FROM NOTICE
         ORDER BY NOTICE_YN, REG_DT DESC
@@ -17,18 +17,18 @@
     <insert id="InsertNoticeInfo" parameterType="NoticeDTO">
         INSERT INTO NOTICE
             (
-             NOTICE_SEQ, TITLE, NOTICE_YN, CONTENTS, USER_ID, READ_CNT,
+             NOTICE_SEQ, TITLE, CONTENTS, USER_ID, READ_CNT,
              REG_ID, REG_DT, CHG_ID, CHG_DT
             )
             VALUES (
                     (SELECT NULLIF (MAX(A.NOTICE_SEQ),0)+1 FROM NOTICE A),
-                    #{title}, #{notice_yn}, #{contents}, #{user_id}, 0, #{user_id}, SYSDATE(), #{user_id}, SYSDATE()
+                    #{title},#{contents}, #{user_id}, 0, #{user_id}, SYSDATE(), #{user_id}, SYSDATE()
                    )
     </insert>
 
     <!--게시판 상세보기 쿼리 -->
     <select id="getNoticeInfo" resultType="NoticeDTO">
-        SELECT NOTICE_SEQ, TITLE, NOTICE_YN, READ_CNT, USER_ID,
+        SELECT NOTICE_SEQ, TITLE, READ_CNT, USER_ID,
                CONTENTS, DATE_FORMAT(REG_DT, '%Y-%m-%d')AS REG_DT
         FROM NOTICE
         WHERE NOTICE_SEQ = #{notice_seq}
@@ -46,7 +46,6 @@
     <update id="updateNoticeInfo" parameterType="NoticeDTO">
         UPDATE NOTICE SET
             TITLE = #{title},
-            NOTICE_YN = #{notice_yn},
             CONTENTS = #{contents},
             CHG_ID = #{chg_id},
             CHG_DT = SYSDATE()
