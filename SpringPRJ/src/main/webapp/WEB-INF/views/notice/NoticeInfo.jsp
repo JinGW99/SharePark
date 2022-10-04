@@ -272,7 +272,7 @@
         function doDelete(){
             if ("<%=access%>" == 2){
                 if (confirm("작성한 글을 삭제하시겠습니까?")){
-                    location.href="notice/NoticeDelete?notice_seq=<%=CmmUtil.nvl(rDTO.getNotice_seq())%>";
+                    location.href="/notice/NoticeDelete?notice_seq=<%=CmmUtil.nvl(rDTO.getNotice_seq())%>";
 
                 }
             }else {
